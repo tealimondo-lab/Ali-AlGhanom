@@ -792,6 +792,210 @@ if (window.netlifyIdentity) {
     }
   });
 }
+</script> 
+  
+<style>
+/* ALI ALGHANOM - Photography Gallery */
+.ag-gallery {
+  padding: 90px 6%;
+  background: #0a0a0b;
+  color: #f2efe8;
+}
+
+.ag-gallery-header {
+  text-align: center;
+  margin-bottom: 45px;
+}
+
+.ag-gallery-header span {
+  color: #c8a35a;
+  letter-spacing: 4px;
+  font-size: 11px;
+}
+
+.ag-gallery-header h2 {
+  font-size: clamp(32px, 5vw, 54px);
+  margin: 15px 0;
+  font-weight: 500;
+}
+
+.ag-gallery-header p {
+  color: #999;
+  font-size: 14px;
+}
+
+.ag-gallery-grid {
+  columns: 3;
+  column-gap: 16px;
+  max-width: 1300px;
+  margin: auto;
+}
+
+.ag-photo {
+  position: relative;
+  margin-bottom: 16px;
+  break-inside: avoid;
+  overflow: hidden;
+  cursor: pointer;
+  background: #181818;
+}
+
+.ag-photo img {
+  width: 100%;
+  height: auto;
+  display: block;
+  transition: transform .5s ease, opacity .5s ease;
+}
+
+.ag-photo:hover img {
+  transform: scale(1.035);
+  opacity: .8;
+}
+
+.ag-photo figcaption {
+  padding: 12px;
+  color: #ddd;
+  font-size: 12px;
+  letter-spacing: 1px;
+}
+
+.ag-lightbox {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  background: rgba(0,0,0,.95);
+  align-items: center;
+  justify-content: center;
+  padding: 30px;
+}
+
+.ag-lightbox.active {
+  display: flex;
+}
+
+.ag-lightbox img {
+  max-width: 95%;
+  max-height: 85vh;
+  object-fit: contain;
+}
+
+.ag-lightbox-close {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  color: white;
+  font-size: 35px;
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+
+@media(max-width: 750px) {
+  .ag-gallery-grid { columns: 2; }
+  .ag-gallery { padding: 65px 5%; }
+}
+
+@media(max-width: 450px) {
+  .ag-gallery-grid { columns: 1; }
+}
+</style>
+
+<section class="ag-gallery" id="photography">
+  <div class="ag-gallery-header">
+    <span>SELECTED WORKS — 2023 / 2026</span>
+    <h2>Photography</h2>
+    <p>Stories, moments and perspectives through my lens.</p>
+  </div>
+
+  <div class="ag-gallery-grid">
+
+    <figure class="ag-photo">
+      <img src="images/photography/01-sunset-road.webp" alt="Sunset road">
+      <figcaption>Golden Hour</figcaption>
+    </figure>
+
+    <figure class="ag-photo">
+      <img src="images/photography/02-moon.webp" alt="Moon photography">
+      <figcaption>Moonlight</figcaption>
+    </figure>
+
+    <figure class="ag-photo">
+      <img src="images/photography/03-violin.webp" alt="Violin detail">
+      <figcaption>Music in Details</figcaption>
+    </figure>
+
+    <figure class="ag-photo">
+      <img src="images/photography/04-children-around-fire.webp" alt="Children around a fire">
+      <figcaption>Human Stories</figcaption>
+    </figure>
+
+    <figure class="ag-photo">
+      <img src="images/photography/05-table-tennis.webp" alt="Table tennis">
+      <figcaption>Focus</figcaption>
+    </figure>
+
+    <figure class="ag-photo">
+      <img src="images/photography/06-sunset-silhouette.webp" alt="Sunset silhouette">
+      <figcaption>Silhouette</figcaption>
+    </figure>
+
+    <figure class="ag-photo">
+      <img src="images/photography/07-full-moon.webp" alt="Full moon">
+      <figcaption>Beyond Earth</figcaption>
+    </figure>
+
+    <figure class="ag-photo">
+      <img src="images/photography/08-football-celebration.webp" alt="Football celebration">
+      <figcaption>Celebration</figcaption>
+    </figure>
+
+    <figure class="ag-photo">
+      <img src="images/photography/09-child-behind-fence.webp" alt="Child behind a fence">
+      <figcaption>Different Perspectives</figcaption>
+    </figure>
+
+    <figure class="ag-photo">
+      <img src="images/photography/10-girl-portrait.webp" alt="Portrait photography">
+      <figcaption>Portraits</figcaption>
+    </figure>
+
+  </div>
+</section>
+
+<div class="ag-lightbox" id="agLightbox">
+  <button class="ag-lightbox-close" aria-label="Close">&times;</button>
+  <img src="" alt="Expanded photograph" id="agLightboxImage">
+</div>
+
+<script>
+(function() {
+  const box = document.getElementById('agLightbox');
+  const preview = document.getElementById('agLightboxImage');
+
+  document.querySelectorAll('.ag-photo img').forEach(img => {
+    img.addEventListener('click', () => {
+      preview.src = img.src;
+      box.classList.add('active');
+    });
+  });
+
+  function closeBox() {
+    box.classList.remove('active');
+    preview.src = '';
+  }
+
+  box.querySelector('button').addEventListener('click', closeBox);
+
+  box.addEventListener('click', e => {
+    if (e.target === box) closeBox();
+  });
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeBox();
+  });
+})();
 </script>
+
 </body>
 </html>
