@@ -887,10 +887,7 @@ window.addEventListener('keydown',e=>{
   if(e.key==='ArrowRight')document.getElementById('lbNext').click();
   if(e.key==='ArrowLeft')document.getElementById('lbPrev').click();
 });
-document.getElementById('showreelBtn').addEventListener('click',()=>{
-  const reel = PROJECTS.find(p=>p.video) || PROJECTS[PROJECTS.length-1];
-  if(reel) openLightbox(reel.id);
-});
+
 
 /* ---------------- reveal on scroll ---------------- */
 const io=new IntersectionObserver(entries=>{
