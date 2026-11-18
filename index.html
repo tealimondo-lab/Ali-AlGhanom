@@ -96,8 +96,35 @@
     overflow:hidden;
   }
   .hero-media{position:absolute;inset:0;z-index:0;}
-  .hero-media img{width:100%;height:100%;object-fit:cover;filter:grayscale(65%) contrast(1.05) brightness(.7);
-    transform:scale(1.08);animation:kenburns 18s ease-in-out infinite alternate;}
+  
+.hero-media img{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  filter:grayscale(65%) contrast(1.05) brightness(.7);
+  transform:scale(1.08);
+  opacity:0;
+  animation:heroSlide 50s linear infinite;
+}
+
+.hero-media img:nth-child(1){animation-delay:0s;}
+.hero-media img:nth-child(2){animation-delay:-5s;}
+.hero-media img:nth-child(3){animation-delay:-10s;}
+.hero-media img:nth-child(4){animation-delay:-15s;}
+.hero-media img:nth-child(5){animation-delay:-20s;}
+.hero-media img:nth-child(6){animation-delay:-25s;}
+.hero-media img:nth-child(7){animation-delay:-30s;}
+.hero-media img:nth-child(8){animation-delay:-35s;}
+.hero-media img:nth-child(9){animation-delay:-40s;}
+.hero-media img:nth-child(10){animation-delay:-45s;}
+
+@keyframes heroSlide{
+  0%,10%{opacity:1;}
+  12%,100%{opacity:0;}
+}
+
   @keyframes kenburns{from{transform:scale(1.08) translate(0,0);}to{transform:scale(1.16) translate(-1.5%,-1%);}}
   .hero::after{
     content:'';position:absolute;inset:0;z-index:1;
@@ -355,7 +382,20 @@
 
 <!-- HERO -->
 <section class="hero" style="padding:0;">
-  <div class="hero-media"><img id="heroBg" src="https://picsum.photos/seed/kanehero/1800/1100" alt="Cinematic still"></div>
+ 
+<div class="hero-media">
+  <img src="images/photography/01-sunset-road.webp" alt="Photography 1">
+  <img src="images/photography/02-moon.webp" alt="Photography 2">
+  <img src="images/photography/03-violin.webp" alt="Photography 3">
+  <img src="images/photography/04-children-around-fire.webp" alt="Photography 4">
+  <img src="images/photography/05-table-tennis.webp" alt="Photography 5">
+  <img src="images/photography/06-sunset-silhouette.webp" alt="Photography 6">
+  <img src="images/photography/07-full-moon.webp" alt="Photography 7">
+  <img src="images/photography/08-football-celebration.webp" alt="Photography 8">
+  <img src="images/photography/09-child-behind-fence.webp" alt="Photography 9">
+  <img src="images/photography/10-girl-portrait.webp" alt="Photography 10">
+</div>
+
   <div class="frame-count"><span class="sprocket"></span> ROLL 07 — FRAME 36A</div>
   <div class="hero-content">
     <div class="hero-eyebrow"><span class="dash"></span><span class="eyebrow" id="heroLocation">Based in Lisbon · Working worldwide</span></div>
