@@ -210,11 +210,22 @@
   .filter-pill:hover{border-color:var(--gold-dim);color:var(--bone);}
   .filter-pill.active{background:var(--gold);border-color:var(--gold);color:var(--ink);font-weight:600;}
 
-  .grid{
-    column-count:3;column-gap:20px;
-  }
-  @media(max-width:1000px){.grid{column-count:2;}}
-  @media(max-width:600px){.grid{column-count:1;}}
+.grid {
+    columns: 3;
+    column-gap: 20px;
+}
+
+@media (max-width: 1000px) {
+    .grid {
+        columns: 2;
+    }
+}
+
+@media (max-width: 600px) {
+    .grid {
+        columns: 1;
+    }
+}
   .card{
     break-inside:avoid;margin-bottom:20px;position:relative;overflow:hidden;background:var(--panel);
     opacity:0;transform:translateY(24px);transition:opacity .7s var(--ease),transform .7s var(--ease);
@@ -796,7 +807,8 @@ function renderGrid(filter){
   const list = filter==='All' ? PROJECTS : PROJECTS.filter(p=>p.category===filter);
   list.forEach(p=>{
     const c=document.createElement('div');
-    c.className='card';
+   c.className = 'card';
+c.style.height = 'fit-content';
     c.innerHTML=`<img src="${p.cover||''}" loading="lazy">
       <div class="card-overlay"><div class="cat">${p.category||''}</div><h3>${p.title||''}</h3><div class="exif">${p.client||''} · ${p.year||''}</div></div>`;
     c.addEventListener('click',()=>openLightbox(p.id));
