@@ -653,6 +653,31 @@ const PHOTO_PROJECTS = [
   {id: 9, title: "Different Perspectives", cover: "images/photography/09-child-behind-fence.webp", category: "Documentary", year: "2026"},
   {id: 10, title: "Portrait", cover: "images/photography/10-girl-portrait.webp", category: "Portraits", year: "2026"}
 ];
+  
+async function loadPhotographyFromGitHub() {
+  const url = "https://api.github.com/repos/tealimondo-lab/Ali-AlGhanom/contents/images/photography";
+
+  try {
+    const response = await fetch(url);
+    if (!response.ok) throw new Error("Could not load photos");
+
+    const files = await response.json();
+
+    return files
+      .filter(file => /\.(webp|jpg|jpeg|png)$/i.test(file.name))
+      .map((file, index) => ({
+        id: index + 1,
+        title: file.name.replace(/\.[^.]+$/, "").replace(/[-_]/g, " "),
+        cover: file.download_url,
+        category: "Photography",
+        year: "2026"
+      }));
+  } catch (error) {
+    console.error("Photography loading error:", error);
+    return PHOTO_PROJECTS;
+  }
+}
+
 
 
 let HERO=null, ABOUT=null, CONTACT=null, PROJECTS=[], SERVICES=[], TESTIMONIALS=[];
@@ -680,7 +705,7 @@ async function loadContent(){
   HERO = hero;
   ABOUT = about;
   CONTACT = contact;
-  PROJECTS = PHOTO_PROJECTS;
+ PROJECTS = await loadPhotographyFromGitHub();
   SERVICES = (services && services.items) ? services.items : [];
   TESTIMONIALS = (testimonials && testimonials.items) ? testimonials.items : [];
 
