@@ -513,6 +513,82 @@
     font-size: 9px;
   }
 }
+  /* ABOUT SECTION - MOBILE FIX */
+@media (max-width: 600px) {
+
+  #about {
+    padding: 75px 6%;
+  }
+
+  .about-wrap {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 35px;
+  }
+
+  .about-portrait {
+    position: relative;
+    top: auto;
+    width: 100%;
+    max-width: 320px;
+    margin: 0 auto;
+  }
+
+  .about-bio {
+    font-size: 15px;
+    line-height: 1.85;
+    margin-bottom: 38px;
+  }
+
+  .tl-row {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 7px;
+    padding: 20px 0;
+    align-items: start;
+  }
+
+  .tl-row .yr {
+    font-size: 14px;
+  }
+
+  .tl-row .ttl {
+    font-size: 14px;
+    line-height: 1.7;
+  }
+
+  .tl-row .loc {
+    font-size: 10px;
+    line-height: 1.6;
+    letter-spacing: .06em;
+  }
+
+  .skills {
+    grid-template-columns: 1fr;
+    gap: 25px;
+    margin-top: 40px;
+  }
+
+  .skill-bar .lbl {
+    font-size: 11px;
+    margin-bottom: 10px;
+  }
+
+  .skill-track,
+  .skill-fill {
+    height: 3px;
+  }
+
+  .clients-marquee {
+    margin-top: 45px;
+    padding: 22px 0;
+  }
+
+  .marquee-track span {
+    font-size: 16px;
+    margin-right: 35px;
+  }
+}
 
 </style>
 </head>
@@ -597,7 +673,6 @@
     <p>Fourteen years behind a viewfinder, most of them spent learning that the technical part is the easy half.</p>
   </div>
   <div class="about-wrap">
-    <div class="about-portrait reveal"><img id="aboutPortrait" src="https://picsum.photos/seed/kaneportrait/800/1000" alt="Ali portrait"></div>
     <div>
       <p class="about-bio reveal" id="aboutBio"><b>I'm Ali</b> — a photographer and filmmaker who got into this by accident, borrowing my father's old Pentax to shoot a friend's wedding badly. Since then I've worked across editorial, commercial, and documentary work in over twenty countries, always chasing the same thing: a frame that feels inevitable, like it couldn't have been shot any other way. My studio is small on purpose — every project gets my hands on it, from the first location scout to the final grade.</p>
       <div class="timeline reveal" id="aboutTimeline">
