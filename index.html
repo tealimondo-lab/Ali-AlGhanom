@@ -619,7 +619,30 @@
 /* ---------------- content loading ----------------
    All content below is fetched from /content/*.json at runtime.
    Edit those files by hand, or through the /admin panel once deployed. */
-const CATS = ["Photography","Videography","Commercial","Documentary","Portrait","Events","Products","Drone","Lifestyle","Travel","Corporate","Behind The Scenes"];
+
+const CATS = [
+  "Products",
+  "Sports",
+  "Documentary",
+  "Portraits",
+  "Details",
+  "Nature",
+  "Food"
+];
+
+const PHOTO_PROJECTS = [
+  {id: 1, title: "Golden Hour", cover: "images/photography/01-sunset-road.webp", category: "Nature", year: "2026"},
+  {id: 2, title: "Moonlight", cover: "images/photography/02-moon.webp", category: "Nature", year: "2026"},
+  {id: 3, title: "Music in Details", cover: "images/photography/03-violin.webp", category: "Details", year: "2026"},
+  {id: 4, title: "Human Stories", cover: "images/photography/04-children-around-fire.webp", category: "Documentary", year: "2026"},
+  {id: 5, title: "Focus", cover: "images/photography/05-table-tennis.webp", category: "Sports", year: "2026"},
+  {id: 6, title: "Silhouette", cover: "images/photography/06-sunset-silhouette.webp", category: "Nature", year: "2026"},
+  {id: 7, title: "Beyond Earth", cover: "images/photography/07-full-moon.webp", category: "Nature", year: "2026"},
+  {id: 8, title: "Celebration", cover: "images/photography/08-football-celebration.webp", category: "Sports", year: "2026"},
+  {id: 9, title: "Different Perspectives", cover: "images/photography/09-child-behind-fence.webp", category: "Documentary", year: "2026"},
+  {id: 10, title: "Portrait", cover: "images/photography/10-girl-portrait.webp", category: "Portraits", year: "2026"}
+];
+
 
 let HERO=null, ABOUT=null, CONTACT=null, PROJECTS=[], SERVICES=[], TESTIMONIALS=[];
 
@@ -646,7 +669,7 @@ async function loadContent(){
   HERO = hero;
   ABOUT = about;
   CONTACT = contact;
-  PROJECTS = (projects && projects.items) ? projects.items.map((p,i)=>({...p,id:i+1})) : [];
+  PROJECTS = PHOTO_PROJECTS;
   SERVICES = (services && services.items) ? services.items : [];
   TESTIMONIALS = (testimonials && testimonials.items) ? testimonials.items : [];
 
