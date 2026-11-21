@@ -368,6 +368,152 @@
     .menu-btn{display:block;}
     section{padding:100px 6vw;}
   }
+  
+/* ---------- MOBILE RESPONSIVE IMPROVEMENTS ---------- */
+@media (max-width: 600px) {
+
+  section {
+    padding: 75px 5%;
+  }
+
+  header {
+    padding: 18px 5%;
+  }
+
+  .hero {
+    min-height: 100svh;
+  }
+
+  .hero-content {
+    padding: 0 5% 55px;
+  }
+
+  .hero h1 {
+    font-size: clamp(2.7rem, 12vw, 4.2rem);
+    line-height: 1;
+    overflow-wrap: anywhere;
+  }
+
+  .hero-role {
+    font-size: 14px;
+    line-height: 1.7;
+  }
+
+  .hero-actions {
+    gap: 10px;
+  }
+
+  .hero-actions .btn {
+    padding: 13px 16px;
+    font-size: 10px;
+  }
+
+  .section-head {
+    gap: 18px;
+    margin-bottom: 35px;
+  }
+
+  .section-head h2 {
+    font-size: 2.2rem;
+  }
+
+  .section-head p {
+    font-size: 13px;
+  }
+
+  .filters {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: 12px;
+    margin-bottom: 30px;
+    scrollbar-width: none;
+  }
+
+  .filters::-webkit-scrollbar {
+    display: none;
+  }
+
+  .filter-pill {
+    flex-shrink: 0;
+    font-size: 10px;
+    padding: 9px 14px;
+  }
+
+  .grid {
+    columns: 2;
+    column-gap: 10px;
+  }
+
+  .card {
+    margin-bottom: 10px;
+  }
+
+  .about-wrap {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+
+  .about-portrait {
+    position: relative;
+    top: auto;
+    max-width: 100%;
+  }
+
+  .tl-row {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .tl-row .loc {
+    font-size: 10px;
+  }
+
+  .skills {
+    grid-template-columns: 1fr;
+    gap: 22px;
+  }
+
+  .services-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .services-grid .service {
+    border-right: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .contact-wrap {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .contact-info dd {
+    font-size: 14px;
+    overflow-wrap: anywhere;
+  }
+
+  .strip-item {
+    width: 85vw;
+    height: 55vh;
+  }
+
+  footer {
+    padding: 30px 5%;
+  }
+}
+
+@media (max-width: 380px) {
+  .grid {
+    columns: 1;
+  }
+
+  .hero-actions .btn {
+    padding: 12px;
+    font-size: 9px;
+  }
+}
+
 </style>
 </head>
 <body>
