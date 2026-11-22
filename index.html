@@ -605,6 +605,55 @@
     animation-duration: 35s;
   }
 }
+  /* SERVICES - MOBILE IMPROVEMENTS */
+@media (max-width: 600px) {
+  #services {
+    padding: 75px 6%;
+  }
+
+  #services .section-head {
+    margin-bottom: 35px;
+    gap: 15px;
+  }
+
+  #services .section-head h2 {
+    font-size: 2.4rem;
+  }
+
+  #services .section-head p {
+    font-size: 14px;
+    line-height: 1.8;
+  }
+
+  .services-grid {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .services-grid .service {
+    padding: 28px 20px;
+    border: 1px solid var(--line);
+    border-bottom: none;
+  }
+
+  .services-grid .service:last-child {
+    border-bottom: 1px solid var(--line);
+  }
+
+  .service .n {
+    font-size: 13px;
+  }
+
+  .service h3 {
+    font-size: 19px;
+    margin: 14px 0 10px;
+  }
+
+  .service p {
+    font-size: 14px;
+    line-height: 1.8;
+  }
+}
 </style>
 </head>
 <body>
