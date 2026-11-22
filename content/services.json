@@ -1,1 +1,30 @@
 
+{
+  "items": [
+    {
+      "title": "Photography",
+      "description": "Portrait, product, event and documentary photography that captures authentic moments and details."
+    },
+    {
+      "title": "Videography",
+      "description": "Professional video production for events, campaigns, organizations and storytelling projects."
+    },
+    {
+      "title": "Video Editing & Color Grading",
+      "description": "From raw footage to a polished final film through editing, color correction and visual storytelling."
+    },
+    {
+      "title": "Social Media Content",
+      "description": "Engaging visual content designed for digital platforms, campaigns and online audiences."
+    },
+    {
+      "title": "Graphic Design",
+      "description": "Creative visual designs for social media, promotional materials and communication campaigns."
+    },
+    {
+      "title": "Documentary Storytelling",
+      "description": "Human-centered visual stories that communicate experiences, people and meaningful perspectives."
+    }
+  ]
+}
+
