@@ -233,6 +233,10 @@
   .card.in{opacity:1;transform:translateY(0);}
   .card img{width:100%;display:block;filter:grayscale(50%) brightness(.82);transition:transform .9s var(--ease),filter .5s;}
   .card:hover img{transform:scale(1.05);filter:grayscale(0%) brightness(.95);}
+  /* Keep portfolio cards clean: no text over the photographs. */
+  .card-overlay{display:none !important;}
+  .strip-meta{display:none !important;}
+
   .card-overlay{
     position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:22px;
     background:linear-gradient(0deg,rgba(0,0,0,.82) 0%,transparent 55%);
@@ -903,15 +907,19 @@
    All content below is fetched from /content/*.json at runtime.
    Edit those files by hand, or through the /admin panel once deployed. */
 
-const CATS = [
-  "Products",
-  "Sports",
-  "Documentary",
-  "Portraits",
-  "Details",
-  "Nature",
-  "Food"
-];
+const CATEGORY_MAP = {
+  "products": "Products",
+  "sports": "Sports",
+  "documentary": "Documentary",
+  "portrait": "Portraits",
+  "details": "Details",
+  "nature": "Nature",
+  "food-drinks": "Food & Drinks",
+  "animals": "Animals",
+  "events": "Events"
+};
+
+const CATS = Object.values(CATEGORY_MAP);
 
 const PHOTO_PROJECTS = [
   {id: 1, title: "Golden Hour", cover: "images/photography/01-sunset-road.webp", category: "Nature", year: "2026"},
@@ -925,33 +933,66 @@ const PHOTO_PROJECTS = [
   {id: 9, title: "Different Perspectives", cover: "images/photography/09-child-behind-fence.webp", category: "Documentary", year: "2026"},
   {id: 10, title: "Portrait", cover: "images/photography/10-girl-portrait.webp", category: "Portraits", year: "2026"}
 ];
-  
+
 async function loadPhotographyFromGitHub() {
-  const url = "https://api.github.com/repos/tealimondo-lab/Ali-AlGhanom/contents/images/photography";
+  const repoUrl = "https://api.github.com/repos/tealimondo-lab/Ali-AlGhanom";
 
   try {
-    const response = await fetch(url);
-    if (!response.ok) throw new Error("Could not load photos");
+    const repoResponse = await fetch(repoUrl);
+    if (!repoResponse.ok) throw new Error("Could not read repository settings");
+    const repo = await repoResponse.json();
+    const branch = repo.default_branch || "main";
 
-    const files = await response.json();
+    const treeUrl = `${repoUrl}/git/trees/${encodeURIComponent(branch)}?recursive=1`;
+    const treeResponse = await fetch(treeUrl);
+    if (!treeResponse.ok) throw new Error("Could not load photography folders");
 
-    return files
-      .filter(file => /\.(webp|jpg|jpeg|png)$/i.test(file.name))
-      .map((file, index) => ({
-        id: index + 1,
-        title: file.name.replace(/\.[^.]+$/, "").replace(/[-_]/g, " "),
-        cover: file.download_url,
-        category: "Photography",
-        year: "2026"
-      }));
+    const data = await treeResponse.json();
+    const prefix = "images/photography/";
+
+    const photos = (data.tree || [])
+      .filter(item =>
+        item.type === "blob" &&
+        item.path.startsWith(prefix) &&
+        /\.(webp|jpg|jpeg|png)$/i.test(item.path)
+      )
+      .map(item => {
+        const relativePath = item.path.slice(prefix.length);
+        const parts = relativePath.split("/");
+        if (parts.length !== 2) return null;
+
+        const folder = parts[0].toLowerCase();
+        const category = CATEGORY_MAP[folder];
+        if (!category) return null;
+
+        const filename = parts[1];
+        const title = filename
+          .replace(/\.[^.]+$/, "")
+          .replace(/^\d+[-_]?/, "")
+          .replace(/[-_]/g, " ");
+
+        const encodedPath = item.path
+          .split("/")
+          .map(part => encodeURIComponent(part))
+          .join("/");
+
+        return {
+          id: item.path,
+          title: title || category,
+          cover: `https://raw.githubusercontent.com/tealimondo-lab/Ali-AlGhanom/${encodeURIComponent(branch)}/${encodedPath}`,
+          category,
+          year: "2026"
+        };
+      })
+      .filter(Boolean)
+      .sort((a, b) => a.cover.localeCompare(b.cover, undefined, {numeric: true}));
+
+    return photos.length ? photos : PHOTO_PROJECTS;
   } catch (error) {
     console.error("Photography loading error:", error);
     return PHOTO_PROJECTS;
   }
 }
-
-
-
 let HERO=null, ABOUT=null, CONTACT=null, PROJECTS=[], SERVICES=[], TESTIMONIALS=[];
 
 async function loadJSON(path){
@@ -994,7 +1035,8 @@ async function loadContent(){
 /* ---------------- hero ---------------- */
 function renderHero(){
   if(!HERO) return;
-  if(HERO.bg_image) document.getElementById('heroBg').src = HERO.bg_image;
+  const heroBgEl = document.getElementById('heroBg');
+  if(HERO.bg_image && heroBgEl) heroBgEl.src = HERO.bg_image;
   if(HERO.location_line) document.getElementById('heroLocation').textContent = HERO.location_line;
   if(HERO.name) document.getElementById('heroName').textContent = HERO.name;
   const tagEl = document.getElementById('heroTagline');
@@ -1006,17 +1048,19 @@ function renderHero(){
 /* ---------------- about ---------------- */
 function renderAbout(){
   if(!ABOUT) return;
-  if(ABOUT.portrait) document.getElementById('aboutPortrait').src = ABOUT.portrait;
+  const portraitEl = document.getElementById('aboutPortrait');
+  if(ABOUT.portrait && portraitEl) portraitEl.src = ABOUT.portrait;
   if(ABOUT.bio) document.getElementById('aboutBio').innerHTML = ABOUT.bio;
   if(Array.isArray(ABOUT.timeline) && ABOUT.timeline.length){
     document.getElementById('aboutTimeline').innerHTML = ABOUT.timeline.map(t=>
       `<div class="tl-row"><div class="yr">${t.year||''}</div><div class="ttl">${t.title||''}</div><div class="loc">${t.location||''}</div></div>`
     ).join('');
   }
-  if(Array.isArray(ABOUT.clients) && ABOUT.clients.length){
+  const clientsEl = document.getElementById('clientsMarquee');
+  if(clientsEl && Array.isArray(ABOUT.clients) && ABOUT.clients.length){
     const names = ABOUT.clients.map(c=> typeof c==='string' ? c : c.name);
     const doubled = names.concat(names);
-    document.getElementById('clientsMarquee').innerHTML = doubled.map(n=>`<span>${n}</span>`).join('');
+    clientsEl.innerHTML = doubled.map(n=>`<span>${n}</span>`).join('');
   }
 }
 
@@ -1361,102 +1405,6 @@ if (window.netlifyIdentity) {
   .ag-gallery-grid { columns: 1; }
 }
 </style>
-
-<section class="ag-gallery" id="photography">
-  <div class="ag-gallery-header">
-    <span>SELECTED WORKS — 2023 / 2026</span>
-    <h2>Photography</h2>
-    <p>Stories, moments and perspectives through my lens.</p>
-  </div>
-
-  <div class="ag-gallery-grid">
-
-    <figure class="ag-photo">
-      <img src="images/photography/01-sunset-road.webp" alt="Sunset road">
-      <figcaption>Golden Hour</figcaption>
-    </figure>
-
-    <figure class="ag-photo">
-      <img src="images/photography/02-moon.webp" alt="Moon photography">
-      <figcaption>Moonlight</figcaption>
-    </figure>
-
-    <figure class="ag-photo">
-      <img src="images/photography/03-violin.webp" alt="Violin detail">
-      <figcaption>Music in Details</figcaption>
-    </figure>
-
-    <figure class="ag-photo">
-      <img src="images/photography/04-children-around-fire.webp" alt="Children around a fire">
-      <figcaption>Human Stories</figcaption>
-    </figure>
-
-    <figure class="ag-photo">
-      <img src="images/photography/05-table-tennis.webp" alt="Table tennis">
-      <figcaption>Focus</figcaption>
-    </figure>
-
-    <figure class="ag-photo">
-      <img src="images/photography/06-sunset-silhouette.webp" alt="Sunset silhouette">
-      <figcaption>Silhouette</figcaption>
-    </figure>
-
-    <figure class="ag-photo">
-      <img src="images/photography/07-full-moon.webp" alt="Full moon">
-      <figcaption>Beyond Earth</figcaption>
-    </figure>
-
-    <figure class="ag-photo">
-      <img src="images/photography/08-football-celebration.webp" alt="Football celebration">
-      <figcaption>Celebration</figcaption>
-    </figure>
-
-    <figure class="ag-photo">
-      <img src="images/photography/09-child-behind-fence.webp" alt="Child behind a fence">
-      <figcaption>Different Perspectives</figcaption>
-    </figure>
-
-    <figure class="ag-photo">
-      <img src="images/photography/10-girl-portrait.webp" alt="Portrait photography">
-      <figcaption>Portraits</figcaption>
-    </figure>
-
-  </div>
-</section>
-
-<div class="ag-lightbox" id="agLightbox">
-  <button class="ag-lightbox-close" aria-label="Close">&times;</button>
-  <img src="" alt="Expanded photograph" id="agLightboxImage">
-</div>
-
-<script>
-(function() {
-  const box = document.getElementById('agLightbox');
-  const preview = document.getElementById('agLightboxImage');
-
-  document.querySelectorAll('.ag-photo img').forEach(img => {
-    img.addEventListener('click', () => {
-      preview.src = img.src;
-      box.classList.add('active');
-    });
-  });
-
-  function closeBox() {
-    box.classList.remove('active');
-    preview.src = '';
-  }
-
-  box.querySelector('button').addEventListener('click', closeBox);
-
-  box.addEventListener('click', e => {
-    if (e.target === box) closeBox();
-  });
-
-  document.addEventListener('keydown', e => {
-    if (e.key === 'Escape') closeBox();
-  });
-})();
-</script>
 
 <section class="ag-gallery" id="videography">
   <div class="ag-gallery-header">
