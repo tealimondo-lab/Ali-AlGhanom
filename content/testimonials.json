@@ -1,1 +1,41 @@
 
+{
+  "items": [
+    {
+      "quote": "Thank you so much for your hard work, Ali. You did everything we requested, and probably much more. I really hope we can collaborate more in the future. Wish you the best!",
+      "who": "Gonzalo Muñoz",
+      "role": "Social Project Manager"
+    },
+    {
+      "quote": "Nothing can describe how much I appreciate everything you have done. Really great work! I am sure we are going to do more together in the future.",
+      "who": "Waed Shwamreh",
+      "role": "Project Coordinator"
+    },
+    {
+      "quote": "What a collection of photos! What power they have. There is so much more to them than meets the eye at first glance. I was even moved when I saw them.",
+      "who": "Javier Garcia",
+      "role": "LALIGA Project"
+    },
+    {
+      "quote": "Credit goes to the talented photographer Ali Al-Ghannoum!",
+      "who": "Aya Musmar",
+      "role": "Photography Appreciation"
+    },
+    {
+      "quote": "Thank you for capturing the essence of this project and bringing its spirit to life through your lens.",
+      "who": "Gonzalo Muñoz",
+      "role": "LALIGA Social Project"
+    },
+    {
+      "quote": "Great work on the video. You're truly creative. Keep it up!",
+      "who": "Ahmad Bastanji",
+      "role": "Video Feedback"
+    },
+    {
+      "quote": "A special thank you to our wonderful photographer. You did an amazing job!",
+      "who": "Project Team",
+      "role": "Event Appreciation"
+    }
+  ]
+}
+
